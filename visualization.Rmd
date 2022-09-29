@@ -27,26 +27,29 @@ weather_df =
     tmax = tmax / 10) %>%
   select(name, id, everything())
 
-# view(weather_df)
+# View(weather_df)
+# or weather_df %>% view
 ```
 
 ```{r}
 # basic scatterplot
 ggplot(weather_df, aes(x = tmin, y = tmax))
-```
 
-```{r}
 ggplot(weather_df, aes(x = tmin, y = tmax)) + 
   geom_point()
 ```
 
 ```{r}
+# or (this is same thing as above)
 weather_df %>%
   ggplot(aes(x = tmin, y = tmax)) + 
   geom_point()
+
+# helpful if want to do some modifying before making plot, like drop_na(), mutating, filter, etc. 
 ```
 
 ```{r}
+# also same as above but not; helpful if want to superimpose diff plots on same backdrop... can also save object and then export
 plot_weather = 
   weather_df %>%
   ggplot(aes(x = tmin, y = tmax)) 
@@ -64,6 +67,9 @@ ggplot(weather_df, aes(x = tmin, y = tmax)) +
 ggplot(weather_df, aes(x = tmin, y = tmax)) + 
   geom_point(aes(color = name), alpha = .5) +
   geom_smooth(se = FALSE)
+
+# color line applies only to the scatterplot
+# alpha is level of transparency 0-1, 0 is transparent, 1 is not
 ```
 
 ```{r}
@@ -71,6 +77,9 @@ ggplot(weather_df, aes(x = tmin, y = tmax, color = name)) +
   geom_point(alpha = .5) +
   geom_smooth(se = FALSE) + 
   facet_grid(. ~ name)
+
+# color line applies to every geom created
+# can remove geom_point to just see the lines; although want to keep the points generally
 ```
 
 ```{r}
@@ -78,6 +87,12 @@ ggplot(weather_df, aes(x = date, y = tmax, color = name)) +
   geom_point(aes(size = prcp), alpha = .5) +
   geom_smooth(se = FALSE) + 
   facet_grid(. ~ name)
+
+# facet - row variable, ~ column variable.... dot variable is a placeholder and that you don't want a row variable 
+
+# could do color by precip not name or size by precip 
+
+# could add a line to rotate labels (google for code), or zoom out
 ```
 
 ```{r}
